@@ -142,7 +142,7 @@ const data = {
          categoryVn: 'laptop',
          image: 'https://res.cloudinary.com/mern-manhhadtbk/image/upload/v1657337782/mern-image/laptop/acer-laptop_lxiwxf.jpg', // 679px × 829px
          price: 150,
-         countInStock: 0,
+         countInStock: 10,
          brand: 'Acer',
          rating: 4.5,
          numReviews: 10,
@@ -181,7 +181,7 @@ const data = {
          categoryVn: 'laptop',
          image: 'https://res.cloudinary.com/mern-manhhadtbk/image/upload/v1657337782/mern-image/laptop/lenovo-laptop_wsxjkd.jpg', // 679px × 829px
          price: 999,
-         countInStock: 10,
+         countInStock: 0,
          brand: 'Lenovo',
          rating: 3.5,
          numReviews: 10,

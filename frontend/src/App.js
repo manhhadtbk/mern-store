@@ -180,7 +180,9 @@ function App() {
 
 
                   {userInfo && userInfo.isStaff && (
-                    <NavDropdown title="Staff" id="staff-nav-dropdown">
+                    <NavDropdown
+                      title={isEnglish ? '"Staff"' : 'Nhân viên'}
+                      id="staff-nav-dropdown">
                       <LinkContainer to="/isstaff/orderslistcreenforstaff">
                         <NavDropdown.Item>
                           {isEnglish ? 'Orders' : 'Các đơn hàng'}
