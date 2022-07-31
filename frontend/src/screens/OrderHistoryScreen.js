@@ -23,7 +23,7 @@ const reducer = (state, action) => {
 
 export default function OrderHistoryScreen() {
    const { state } = useContext(Store);
-   const { userInfo } = state;
+   const { userInfo, isEnglish } = state;
    const navigate = useNavigate();
 
    const [{ loading, error, orders }, dispatch] = useReducer(reducer, {
@@ -52,10 +52,12 @@ export default function OrderHistoryScreen() {
    return (
       <div>
          <Helmet>
-            <title>Order History</title>
+            <title>
+               {isEnglish ? 'Order History' : 'Lịch sử mua hàng'}
+            </title>
          </Helmet>
 
-         <h1>Order History</h1>
+         <h1>{isEnglish ? 'Order History' : 'Lịch sử mua hàng'}</h1>
          {loading ? (
             <LoadingBox></LoadingBox>
          ) : error ? (
@@ -65,12 +67,24 @@ export default function OrderHistoryScreen() {
                <thead>
                   <tr>
                      <th>ID</th>
-                     <th>DATE</th>
-                     <th>TOTAL</th>
-                     <th>PAID</th>
-                     <th>CANCELED</th>
-                     <th>DELIVERED</th>
-                     <th>ACTIONS</th>
+                     <th>
+                        {isEnglish ? 'DATE' : 'Thời gian'}
+                     </th>
+                     <th>
+                        {isEnglish ? 'TOTAL' : 'Tổng tiền'}
+                     </th>
+                     <th>
+                        {isEnglish ? 'PAID' : 'Tình trạng thanh toán'}
+                     </th>
+                     <th>
+                        {isEnglish ? 'CANCELED' : 'Tình trạng Hủy'}
+                     </th>
+                     <th>
+                        {isEnglish ? 'DELIVERED' : 'Tình trạng giao hàng'}
+                     </th>
+                     <th>
+                        {isEnglish ? 'ACTIONS' : 'Hành động'}
+                     </th>
                   </tr>
                </thead>
                <tbody>
@@ -94,7 +108,9 @@ export default function OrderHistoryScreen() {
                                  navigate(`/order/${order._id}`);
                               }}
                            >
-                              Details
+
+                              {isEnglish ? 'Details' : 'Xem chi tiết'}
+
                            </Button>
                         </td>
                      </tr>

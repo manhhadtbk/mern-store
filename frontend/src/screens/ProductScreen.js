@@ -51,7 +51,8 @@ function ProductScreen() {
    }, [slug]);
 
    const { state, dispatch: ctxDispatch } = useContext(Store);
-   const { cart } = state;
+   const { cart, isEnglish } = state;
+
    const addToCartHandler = async () => {
       const existItem = cart.cartItems.find((x) => x._id === product._id);
       const quantity = existItem ? existItem.quantity + 1 : 1;
@@ -94,9 +95,12 @@ function ProductScreen() {
                         numReviews={product.numReviews}
                      ></Rating>
                   </ListGroup.Item>
-                  <ListGroup.Item>Pirce : ${product.price}</ListGroup.Item>
                   <ListGroup.Item>
-                     Description:
+                     {isEnglish ? 'Pirce : $' : 'Giá : $ '}
+
+                     {product.price}</ListGroup.Item>
+                  <ListGroup.Item>
+                     {isEnglish ? 'Description:' : 'Mô tả:'}
                      <p>{product.description}</p>
                   </ListGroup.Item>
                </ListGroup>
@@ -107,18 +111,26 @@ function ProductScreen() {
                      <ListGroup variant="flush">
                         <ListGroup.Item>
                            <Row>
-                              <Col>Price:</Col>
+                              <Col>
+                                 {isEnglish ? 'Price:' : 'Giá:'}
+                              </Col>
                               <Col>${product.price}</Col>
                            </Row>
                         </ListGroup.Item>
                         <ListGroup.Item>
                            <Row>
-                              <Col>Status:</Col>
+                              <Col>
+                                 {isEnglish ? 'Status:' : 'Tình trạng'}
+                              </Col>
                               <Col>
                                  {product.countInStock > 0 ? (
-                                    <Badge bg="success">In Stock</Badge>
+                                    <Badge bg="success">
+                                       {isEnglish ? 'In Stock' : 'Còn hàng'}
+                                    </Badge>
                                  ) : (
-                                    <Badge bg="danger">Unavailable</Badge>
+                                    <Badge bg="danger">
+                                       {isEnglish ? 'Unavailable' : 'Hết hàng'}
+                                    </Badge>
                                  )}
                               </Col>
                            </Row>
@@ -128,7 +140,8 @@ function ProductScreen() {
                            <ListGroup.Item>
                               <div className="d-grid">
                                  <Button onClick={addToCartHandler} variant="primary">
-                                    Add to Cart
+                                    {isEnglish ? ' Add to Cart' : 'Thêm vào giở hàng'}
+
                                  </Button>
                               </div>
                            </ListGroup.Item>

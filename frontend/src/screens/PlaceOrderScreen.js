@@ -34,7 +34,7 @@ export default function PlaceOrderScreen() {
    });
 
    const { state, dispatch: ctxDispatch } = useContext(Store);
-   const { cart, userInfo } = state;
+   const { cart, userInfo, isEnglish } = state;
 
    const round2 = (num) => Math.round(num * 100 + Number.EPSILON) / 100; // 123.2345 => 123.23
    cart.itemsPrice = round2(
@@ -48,7 +48,7 @@ export default function PlaceOrderScreen() {
       cart.totalPrice = (cart.itemsPrice + cart.shippingPrice + cart.taxPrice)
    }
 
-   console.log(cart);
+   // console.log(cart);
 
    const placeOrderHandler = async () => {
       try {
@@ -91,37 +91,55 @@ export default function PlaceOrderScreen() {
       <div>
          <CheckoutSteps step1 step2 step3 step4></CheckoutSteps>
          <Helmet>
-            <title>Preview Order</title>
+            <title>
+               {isEnglish ? 'Preview Order' : 'Tổng quan đơn hàng'}
+            </title>
          </Helmet>
-         <h1 className="my-3">Preview Order</h1>
+         <h1 className="my-3">{isEnglish ? 'Preview Order' : 'Tổng quan đơn hàng'}</h1>
          <Row>
             <Col md={8}>
                <Card className="mb-3">
                   <Card.Body>
-                     <Card.Title>Shipping</Card.Title>
+                     <Card.Title>
+                        {isEnglish ? 'Shipping' : 'Tình trạng giao hàng'}
+                     </Card.Title>
                      <Card.Text>
-                        <strong>Name:</strong> {cart.shippingAddress.fullName} <br />
-                        <strong>Address: </strong> {cart.shippingAddress.address},
+                        <strong>
+                           {isEnglish ? 'Name' : 'Tên'}
+                           :</strong> {cart.shippingAddress.fullName} <br />
+                        <strong>
+                           {isEnglish ? 'Address' : 'Địa chỉ'}
+                           : </strong> {cart.shippingAddress.address},
                         {cart.shippingAddress.city}, {cart.shippingAddress.postalCode},
                         {cart.shippingAddress.country}
                      </Card.Text>
-                     <Link to="/shipping">Edit</Link>
+                     <Link to="/shipping">
+                        {isEnglish ? 'Edit' : 'Sửa'}
+                     </Link>
                   </Card.Body>
                </Card>
 
                <Card className="mb-3">
                   <Card.Body>
-                     <Card.Title>Payment</Card.Title>
+                     <Card.Title>
+                        {isEnglish ? 'Payment' : 'Thanh toán'}
+                     </Card.Title>
                      <Card.Text>
-                        <strong>Method:</strong> {cart.paymentMethod}
+                        <strong>
+                           {isEnglish ? 'Method' : 'Phương thức thanh toán'}
+                           :</strong> {cart.paymentMethod}
                      </Card.Text>
-                     <Link to="/payment">Edit</Link>
+                     <Link to="/payment">
+                        {isEnglish ? 'Edit' : 'Sửa'}
+                     </Link>
                   </Card.Body>
                </Card>
 
                <Card className="mb-3">
                   <Card.Body>
-                     <Card.Title>Items</Card.Title>
+                     <Card.Title>
+                        {isEnglish ? 'Items' : 'Các sản phẩm'}
+                     </Card.Title>
                      <ListGroup variant="flush">
                         {cart.cartItems.map((item) => (
                            <ListGroup.Item key={item._id}>
@@ -142,30 +160,40 @@ export default function PlaceOrderScreen() {
                            </ListGroup.Item>
                         ))}
                      </ListGroup>
-                     <Link to="/cart">Edit</Link>
+                     <Link to="/cart">
+                        {isEnglish ? 'Edit' : 'Sửa'}
+                     </Link>
                   </Card.Body>
                </Card>
             </Col>
             <Col md={4}>
                <Card>
                   <Card.Body>
-                     <Card.Title>Order Summary</Card.Title>
+                     <Card.Title>
+                        {isEnglish ? 'Order Summary' : 'Giá đơn hàng'}
+                     </Card.Title>
                      <ListGroup variant="flush">
                         <ListGroup.Item>
                            <Row>
-                              <Col>Items</Col>
+                              <Col>
+                                 {isEnglish ? 'Items' : 'Các sản phẩm'}
+                              </Col>
                               <Col>${cart.itemsPrice.toFixed(2)}</Col>
                            </Row>
                         </ListGroup.Item>
                         <ListGroup.Item>
                            <Row>
-                              <Col>Shipping</Col>
+                              <Col>
+                                 {isEnglish ? 'Shipping' : 'Phí giao hàng'}
+                              </Col>
                               <Col>${cart.shippingPrice.toFixed(2)}</Col>
                            </Row>
                         </ListGroup.Item>
                         <ListGroup.Item>
                            <Row>
-                              <Col>Tax</Col>
+                              <Col>
+                                 {isEnglish ? 'Tax' : 'Thuế'}
+                              </Col>
                               <Col>${cart.taxPrice.toFixed(2)}</Col>
                            </Row>
                         </ListGroup.Item>
@@ -178,7 +206,9 @@ export default function PlaceOrderScreen() {
                         <ListGroup.Item>
                            <Row>
                               <Col>
-                                 <strong> Order Total</strong>
+                                 <strong>
+                                    {isEnglish ? 'Order Total' : 'Tổng tiền'}
+                                 </strong>
                               </Col>
                               <Col>
                                  <strong>${cart.totalPrice.toFixed(2)}</strong>
@@ -192,7 +222,7 @@ export default function PlaceOrderScreen() {
                                  onClick={placeOrderHandler}
                                  disabled={cart.cartItems.length === 0}
                               >
-                                 Place Order
+                                 {isEnglish ? 'Place Order' : 'Đặt hàng'}
                               </Button>
                            </div>
                            {loading && <LoadingBox></LoadingBox>}

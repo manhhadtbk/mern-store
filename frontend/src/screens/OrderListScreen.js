@@ -39,8 +39,8 @@ const reducer = (state, action) => {
 };
 export default function OrderListScreen() {
    const navigate = useNavigate();
-   const { state } = useContext(Store);
-   const { userInfo } = state;
+   const { state, } = useContext(Store);
+   const { userInfo, isEnglish } = state;
    const [{ loading, error, orders, loadingDelete, successDelete }, dispatch] =
       useReducer(reducer, {
          loading: true,
@@ -90,9 +90,11 @@ export default function OrderListScreen() {
    return (
       <div>
          <Helmet>
-            <title>Orders</title>
+            <title>
+               {isEnglish ? 'Orders' : 'Các đơn hàng'}
+            </title>
          </Helmet>
-         <h1>Orders</h1>
+         <h1> {isEnglish ? 'Orders' : 'Các đơn hàng'}</h1>
 
          {loadingDelete && <LoadingBox></LoadingBox>}
 
@@ -105,13 +107,27 @@ export default function OrderListScreen() {
                <thead>
                   <tr>
                      <th>ID</th>
-                     <th>USER</th>
-                     <th>DATE</th>
-                     <th>TOTAL</th>
-                     <th>PAID</th>
-                     <th>CANCALED</th>
-                     <th>DELIVERED</th>
-                     <th>ACTIONS</th>
+                     <th>
+                        {isEnglish ? 'USER' : 'Người dùng'}
+                     </th>
+                     <th>
+                        {isEnglish ? 'DATE' : 'Thời gian'}
+                     </th>
+                     <th>
+                        {isEnglish ? 'TOTAL' : 'Tổng số tiền'}
+                     </th>
+                     <th>
+                        {isEnglish ? 'PAID' : 'Tình trạng thanh toán'}
+                     </th>
+                     <th>
+                        {isEnglish ? 'CANCALED' : 'Tình trạng Hủy'}
+                     </th>
+                     <th>
+                        {isEnglish ? 'DELIVERED' : 'Tình trạng giao hàng'}
+                     </th>
+                     <th>
+                        {isEnglish ? 'ACTIONS' : 'Hành động'}
+                     </th>
                   </tr>
                </thead>
                <tbody>
@@ -137,7 +153,9 @@ export default function OrderListScreen() {
                                  navigate(`/order/${order._id}`);
                               }}
                            >
-                              Details
+
+                              {isEnglish ? 'Details' : 'Xem chi tiết'}
+
                            </Button>
                            &nbsp;
                            <Button
@@ -145,7 +163,9 @@ export default function OrderListScreen() {
                               variant="light"
                               onClick={() => deleteHandler(order)}
                            >
-                              Delete
+
+                              {isEnglish ? 'Delete' : 'Xóa'}
+
                            </Button>
                         </td>
                      </tr>

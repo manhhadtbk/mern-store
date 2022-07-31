@@ -23,7 +23,7 @@ const reducer = (state, action) => {
 
 export default function ProfileScreen() {
    const { state, dispatch: ctxDispatch } = useContext(Store);
-   const { userInfo } = state;
+   const { userInfo, isEnglish } = state;
    const [name, setName] = useState(userInfo.name);
    const [email, setEmail] = useState(userInfo.email);
    const [password, setPassword] = useState('');
@@ -64,12 +64,16 @@ export default function ProfileScreen() {
    return (
       <div className="container small-container">
          <Helmet>
-            <title>User Profile</title>
+            <title>
+               {isEnglish ? 'User Profile' : 'Hồ sơ người dùng'}
+            </title>
          </Helmet>
-         <h1 className="my-3">User Profile</h1>
+         <h1 className="my-3">{isEnglish ? 'User Profile' : 'Hồ sơ người dùng'}</h1>
          <form onSubmit={submitHandler}>
             <Form.Group className="mb-3" controlId="name">
-               <Form.Label>Name</Form.Label>
+               <Form.Label>
+                  {isEnglish ? 'Name' : 'Tên'}
+               </Form.Label>
                <Form.Control
                   value={name}
                   onChange={(e) => setName(e.target.value)}
@@ -77,7 +81,9 @@ export default function ProfileScreen() {
                />
             </Form.Group>
             <Form.Group className="mb-3" controlId="name">
-               <Form.Label>Email</Form.Label>
+               <Form.Label>
+                  {isEnglish ? 'Email' : 'Email'}
+               </Form.Label>
                <Form.Control
                   type="email"
                   value={email}
@@ -86,21 +92,27 @@ export default function ProfileScreen() {
                />
             </Form.Group>
             <Form.Group className="mb-3" controlId="password">
-               <Form.Label>Password</Form.Label>
+               <Form.Label>
+                  {isEnglish ? 'Password' : 'Mật khẩu'}
+               </Form.Label>
                <Form.Control
                   type="password"
                   onChange={(e) => setPassword(e.target.value)}
                />
             </Form.Group>
             <Form.Group className="mb-3" controlId="password">
-               <Form.Label>Confirm Password</Form.Label>
+               <Form.Label>
+                  {isEnglish ? 'Confirm Password' : 'Xác nhận mật khẩu'}
+               </Form.Label>
                <Form.Control
                   type="password"
                   onChange={(e) => setConfirmPassword(e.target.value)}
                />
             </Form.Group>
             <div className="mb-3">
-               <Button type="submit">Update</Button>
+               <Button type="submit">
+                  {isEnglish ? 'Update' : 'Cập nhật'}
+               </Button>
             </div>
          </form>
       </div>

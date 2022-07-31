@@ -10,7 +10,7 @@ export default function PaymentMethodScreen() {
    const navigate = useNavigate();
    const { state, dispatch: ctxDispatch } = useContext(Store);
    const {
-      cart: { shippingAddress, paymentMethod },
+      cart: { shippingAddress, paymentMethod }, isEnglish
    } = state;
 
    const [paymentMethodName, setPaymentMethod] = useState(
@@ -33,15 +33,17 @@ export default function PaymentMethodScreen() {
          <CheckoutSteps step1 step2 step3></CheckoutSteps>
          <div className="container small-container">
             <Helmet>
-               <title>Payment Method</title>
+               <title>
+                  {isEnglish ? 'Payment Method' : 'Phương thức thanh toán'}
+               </title>
             </Helmet>
-            <h1 className="my-3">Payment Method</h1>
+            <h1 className="my-3">{isEnglish ? 'Payment Method' : 'Phương thức thanh toán'}</h1>
             <Form onSubmit={submitHandler}>
                <div className="mb-3">
                   <Form.Check
                      type="radio"
                      id="PayPal"
-                     label="VisaCard or MasterCard or Paypal (Free 10%)"
+                     label={isEnglish ? 'VisaCard or MasterCard or Paypal (Free 10%)' : 'Thẻ Visa, Thẻ MasterCard (Giảm giá 10%)'}
                      value="PayPal"
                      checked={paymentMethodName === 'PayPal'}
                      onChange={(e) => setPaymentMethod(e.target.value)}
@@ -51,14 +53,16 @@ export default function PaymentMethodScreen() {
                   <Form.Check
                      type="radio"
                      id="Stripe"
-                     label="Payment on delivery"
+                     label={isEnglish ? 'Payment on delivery' : 'Thanh toán khi nhận hàng'}
                      value="Payment on delivery"
                      checked={paymentMethodName === 'Payment on delivery'}
                      onChange={(e) => setPaymentMethod(e.target.value)}
                   />
                </div>
                <div className="mb-3">
-                  <Button type="submit">Continue</Button>
+                  <Button type="submit">
+                     {isEnglish ? 'Continue' : 'Tiếp tục'}
+                  </Button>
                </div>
             </Form>
          </div>

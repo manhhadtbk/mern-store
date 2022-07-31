@@ -23,7 +23,8 @@ const SlideShow = () => {
     const fetchData = async () => {
       try {
         const { data } = await axios.get(
-          `api/products/search?category=all&query=all&price=all&rating=all&order=newest&page=1`
+          // `api/products/search?category=all&query=all&price=all&rating=all&order=newest&page=1`
+          `/api/products/search/home?&order=toprated&page=1`
         )
 
         setSlides(

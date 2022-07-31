@@ -87,7 +87,7 @@ function reducer(state, action) {
 export default function OrderScreen() {
    const { state } = useContext(Store);
 
-   const { userInfo } = state;
+   const { userInfo, isEnglish } = state;
 
    const params = useParams();
    const { id: orderId } = params;
@@ -435,48 +435,67 @@ export default function OrderScreen() {
    ) : (
       <div>
          <Helmet>
-            <title>Order {orderId}</title>
+            <title>
+               {isEnglish ? 'Order' : 'Đơn hàng'}
+               {orderId}</title>
          </Helmet>
-         <h1 className="my-3">Order {orderId}</h1>
+         <h1 className="my-3">{isEnglish ? 'Order' : 'Đơn hàng'}{orderId}</h1>
          <Row>
             <Col md={8}>
                <Card className="mb-3">
                   <Card.Body>
-                     <Card.Title>Shipping</Card.Title>
+                     <Card.Title>
+                        {isEnglish ? 'Shipping' : 'Tình trạng giao hàng'}
+                     </Card.Title>
                      <Card.Text>
-                        <strong>Name:</strong> {order.shippingAddress.fullName} <br />
-                        <strong>Address: </strong> {order.shippingAddress.address},
+                        <strong>
+                           {isEnglish ? 'Name:' : 'Tên'}
+                        </strong> {order.shippingAddress.fullName} <br />
+                        <strong>
+                           {isEnglish ? 'Address: ' : 'Địa chỉ'}
+                        </strong> {order.shippingAddress.address},
                         {order.shippingAddress.city}, {order.shippingAddress.postalCode}
                         ,{order.shippingAddress.country}
                      </Card.Text>
                      {order.isDelivered ? (
                         <MessageBox variant="success">
-                           Delivered at {order.deliveredAt}
+                           {isEnglish ? 'Delivered at' : 'Giao hàng lúc '}{order.deliveredAt}
                         </MessageBox>
                      ) : (
-                        <MessageBox variant="danger">Not Delivered</MessageBox>
+                        <MessageBox variant="danger">
+                           {isEnglish ? 'Not Delivered' : 'Chưa giao hàng'}
+                        </MessageBox>
                      )}
                   </Card.Body>
                </Card>
                <Card className="mb-3">
                   <Card.Body>
-                     <Card.Title>Payment</Card.Title>
+                     <Card.Title>
+                        {isEnglish ? 'Payment' : 'Tình trạng thanh toán'}
+                     </Card.Title>
                      <Card.Text>
-                        <strong>Method:</strong> {order.paymentMethod}
+                        <strong>
+                           {isEnglish ? 'Method:' : 'Phương thức thanh toán:'}
+                        </strong> {order.paymentMethod}
                      </Card.Text>
                      {order.isPaid ? (
                         <MessageBox variant="success">
-                           Paid at {order.paidAt}
+                           {isEnglish ? 'Paid at ' : 'Đã thanh toán lúc'}
+                           {order.paidAt}
                         </MessageBox>
                      ) : (
-                        <MessageBox variant="danger">Not Paid</MessageBox>
+                        <MessageBox variant="danger">
+                           {isEnglish ? 'Not Paid' : 'Chưa thanh toán'}
+                        </MessageBox>
                      )}
                   </Card.Body>
                </Card>
 
                <Card className="mb-3">
                   <Card.Body>
-                     <Card.Title>Items</Card.Title>
+                     <Card.Title>
+                        {isEnglish ? 'Items' : 'Danh sách sản phẩm'}
+                     </Card.Title>
                      <ListGroup variant="flush">
                         {order.orderItems.map((item) => (
                            <ListGroup.Item key={item._id}>
@@ -503,30 +522,40 @@ export default function OrderScreen() {
             <Col md={4}>
                <Card className="mb-3">
                   <Card.Body>
-                     <Card.Title>Order Summary</Card.Title>
+                     <Card.Title>
+                        {isEnglish ? 'Order Summary' : 'Chi phí đơn hàng'}
+                     </Card.Title>
                      <ListGroup variant="flush">
                         <ListGroup.Item>
                            <Row>
-                              <Col>Items</Col>
+                              <Col>
+                                 {isEnglish ? 'Items' : 'Các sản phẩm'}
+                              </Col>
                               <Col>${order.itemsPrice.toFixed(2)}</Col>
                            </Row>
                         </ListGroup.Item>
                         <ListGroup.Item>
                            <Row>
-                              <Col>Shipping</Col>
+                              <Col>
+                                 {isEnglish ? 'Shipping' : 'Phí giao hàng'}
+                              </Col>
                               <Col>${order.shippingPrice.toFixed(2)}</Col>
                            </Row>
                         </ListGroup.Item>
                         <ListGroup.Item>
                            <Row>
-                              <Col>Tax</Col>
+                              <Col>
+                                 {isEnglish ? 'Tax' : 'Thuế'}
+                              </Col>
                               <Col>${order.taxPrice.toFixed(2)}</Col>
                            </Row>
                         </ListGroup.Item>
                         <ListGroup.Item>
                            <Row>
                               <Col>
-                                 <strong> Order Total</strong>
+                                 <strong>
+                                    {isEnglish ? 'Order Total' : 'Tổng tiền'}
+                                 </strong>
                               </Col>
                               <Col>
                                  <strong>${order.totalPrice.toFixed(2)}</strong>
@@ -539,7 +568,8 @@ export default function OrderScreen() {
                               <ListGroup.Item>
                                  <div className='d-grid'>
                                     <MessageBox>
-                                       The Customer Will Pay On Delivery
+                                       {isEnglish ? 'The Customer Will Pay On Delivery' : 'Khách hàng sẽ thanh toán khi nhận hàng'}
+
                                     </MessageBox>
                                  </div>
                               </ListGroup.Item>
@@ -577,7 +607,8 @@ export default function OrderScreen() {
                                        <Button type='button'
                                           onClick={confirmByStaff}
                                        >
-                                          Confirm The Customer Has Paid
+                                          {isEnglish ? ' Confirm The Customer Has Paid' : 'Xác nhận đã thanh toán'}
+
                                        </Button>
                                     </div>
                                  )}
@@ -586,43 +617,79 @@ export default function OrderScreen() {
                            )}
 
 
-                        {userInfo.isStaff && order.isPaid && !order.isDelivered && (
+                        {/* confirm delivery */}
+                        {(order.paymentMethod === 'PayPal') && order.isShipping && userInfo.isStaff && order.isPaid && !order.isDelivered && (
                            <ListGroup.Item>
                               {loadingDeliver && <LoadingBox></LoadingBox>}
                               <div className="d-grid">
                                  <Button type="button" onClick={deliverOrderHandler}>
-                                    Confirm The Order Has Been Delivered
+                                    {isEnglish ? 'Confirm The Order Has Been Delivered' : 'Xác nhận đã giao hàng'}
+
+                                 </Button>
+                              </div>
+                           </ListGroup.Item>
+                        )}
+                        {(order.paymentMethod === 'Payment on delivery') && userInfo.isStaff && order.isPaid && !order.isDelivered && (
+                           <ListGroup.Item>
+                              {loadingDeliver && <LoadingBox></LoadingBox>}
+                              <div className="d-grid">
+                                 <Button type="button" onClick={deliverOrderHandler}>
+                                    {isEnglish ? 'Confirm The Order Has Been Delivered' : 'Xác nhận đã giao hàng'}
+
                                  </Button>
                               </div>
                            </ListGroup.Item>
                         )}
 
+
                         <ListGroup.Item>
                            <div className="d-grid">
                               {(!order.isShipping) && !order.isPaid && !userInfo.isStaff && !userInfo.isAdmin && (!order.canceled) && (
                                  <Button type="button" variant='secondary' onClick={cancelOrderHandler}>
-                                    Cancel Order
+                                    {isEnglish ? 'Cancel Order' : 'Huỷ đơn hàng'}
+
                                  </Button>
                               )}
 
                               {(!!order.canceled) && (
-                                 <MessageBox variant="secondary">Order Canceled</MessageBox>
+                                 <MessageBox variant="secondary">
+                                    {isEnglish ? 'Order Canceled' : 'Đơn hàng đã bị hủy'}
+                                 </MessageBox>
                               )}
                            </div>
                         </ListGroup.Item>
 
                         <ListGroup.Item>
                            <div className="d-grid">
+
+                              {
+                                 (order.paymentMethod === 'PayPal') && !order.isPaid && (
+                                    <MessageBox variant="warning">
+                                       {isEnglish ? 'Waiting for customer to pay' : 'Đang chờ khách hàng thanh toán online'}</MessageBox>
+                                 )
+                              }
+
                               {!order.canceled && (!order.isShipping) && (
-                                 <MessageBox variant="warning">Order is processing</MessageBox>
+                                 <MessageBox variant="warning">
+                                    {isEnglish ? 'Order is processing' : 'Đơn hàng đang chờ xử lý'}</MessageBox>
                               )}
                               {!order.isDelivered && order.isShipping && (
-                                 <MessageBox variant="success">Order is shipping</MessageBox>
+                                 <MessageBox variant="success">
+                                    {isEnglish ? 'Order is shipping' : 'Đơn hàng đang được vận chuyển'}
+                                 </MessageBox>
                               )}
 
-                              {!order.canceled && !order.isPaid && !order.isShipping && userInfo.isStaff && (
+                              {(order.paymentMethod === 'PayPal') && !order.canceled && order.isPaid && !order.isShipping && userInfo.isStaff && (
                                  <Button type="button" variant='warning' onClick={shippingOrderHandler}>
-                                    Start Shipping Order
+                                    {isEnglish ? 'Start Shipping Order' : 'Bắt đầu giao hàng'}
+
+                                 </Button>
+                              )}
+
+                              {(order.paymentMethod === 'Payment on delivery') && !order.canceled && !order.isPaid && !order.isShipping && userInfo.isStaff && (
+                                 <Button type="button" variant='warning' onClick={shippingOrderHandler}>
+                                    {isEnglish ? 'Start Shipping Order' : 'Bắt đầu giao hàng'}
+
                                  </Button>
                               )}
 

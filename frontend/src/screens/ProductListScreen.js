@@ -75,7 +75,7 @@ export default function ProductListScreen() {
    const page = sp.get('page') || 1;
 
    const { state } = useContext(Store);
-   const { userInfo } = state;
+   const { userInfo, isEnglish } = state;
 
    useEffect(() => {
       const fetchData = async () => {
@@ -139,12 +139,14 @@ export default function ProductListScreen() {
       <div>
          <Row>
             <Col>
-               <h1>Products</h1>
+               <h1>
+                  {isEnglish ? 'Products' : 'Các sản phẩm'}
+               </h1>
             </Col>
             <Col className="col text-end">
                <div>
                   <Button type="button" onClick={createHandler}>
-                     Create Product
+                     {isEnglish ? 'Create Product' : 'Tạo mẫu sản phẩm mới'}
                   </Button>
                </div>
             </Col>
@@ -163,11 +165,21 @@ export default function ProductListScreen() {
                   <thead>
                      <tr>
                         <th>ID</th>
-                        <th>NAME</th>
-                        <th>PRICE</th>
-                        <th>CATEGORY</th>
-                        <th>BRAND</th>
-                        <th>ACTIONS</th>
+                        <th>
+                           {isEnglish ? 'NAME' : 'Tên'}
+                        </th>
+                        <th>
+                           {isEnglish ? 'PRICE' : 'Giá'}
+                        </th>
+                        <th>
+                           {isEnglish ? 'CATEGORY' : 'Mặt hàng'}
+                        </th>
+                        <th>
+                           {isEnglish ? 'BRAND' : 'Thương hiệu'}
+                        </th>
+                        <th>
+                           {isEnglish ? 'ACTIONS' : 'Hành động'}
+                        </th>
                      </tr>
                   </thead>
                   <tbody>
@@ -184,7 +196,8 @@ export default function ProductListScreen() {
                                  variant="light"
                                  onClick={() => navigate(`/admin/product/${product._id}`)}
                               >
-                                 Edit
+                                 {isEnglish ? 'Edit' : 'Sửa'}
+
                               </Button>
                               &nbsp;
                               <Button
@@ -192,7 +205,8 @@ export default function ProductListScreen() {
                                  variant="light"
                                  onClick={() => deleteHandler(product)}
                               >
-                                 Delete
+                                 {isEnglish ? 'Delete' : 'Xóa'}
+
                               </Button>
                            </td>
                         </tr>

@@ -14,6 +14,7 @@ function Product(props) {
    const { state, dispatch: ctxDispatch } = useContext(Store);
    const {
       cart: { cartItems },
+      isEnglish,
    } = state;
 
    // let [isOutOfStock, setIsCountInStock] = useState(false)
@@ -54,11 +55,14 @@ function Product(props) {
             <Rating rating={product.rating} numReviews={product.numReviews} />
             <Card.Text>${product.price}</Card.Text>
             {(product.countInStock === 0 || isOutOfStock) ? (
-               <Button variant="light" disabled>
-                  Out of stock
+               <Button variant="primary" disabled>
+                  {/* Out of stock */}
+                  {isEnglish ? 'Out of stock' : 'Tạm hêt hàng'}
                </Button>
             ) : (
-               <Button onClick={() => addToCartHandler(product)}>Add to cart</Button>
+               <Button onClick={() => addToCartHandler(product)}>
+                  {isEnglish ? 'Add to cart' : 'Thêm vào giở hàng'}
+               </Button>
             )}
          </Card.Body>
       </Card>

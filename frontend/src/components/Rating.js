@@ -1,4 +1,11 @@
+import { useContext } from "react";
+import { Store } from "../Store";
+
 function Rating(props) {
+
+   const { state, dispatch: ctxDispatch } = useContext(Store);
+   const { cart, isEnglish, userInfo } = state;
+
    const { rating, numReviews, caption } = props;
    return (
       <div className="rating">
@@ -60,7 +67,8 @@ function Rating(props) {
          {caption ? (
             <span>{caption}</span>
          ) : (
-            <span>{' ' + numReviews + ' reviews'}</span>
+
+            <span>{' ' + numReviews},{isEnglish ? ' reviews' : 'bình luận'}</span>
          )}
       </div>
    );

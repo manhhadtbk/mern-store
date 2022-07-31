@@ -30,7 +30,7 @@ const reducer = (state, action) => {
 export default function OrderScreenListForStaff() {
   const navigate = useNavigate()
   const { state } = useContext(Store)
-  const { userInfo } = state
+  const { userInfo, isEnglish } = state
 
   const [{ loading, error, orders }, dispatch] = useReducer(reducer, {
     loading: true,
@@ -59,9 +59,11 @@ export default function OrderScreenListForStaff() {
   return (
     <div>
       <Helmet>
-        <title>Orders</title>
+        <title>
+          {isEnglish ? 'Orders' : 'Các đơn hàng'}
+        </title>
       </Helmet>
-      <h1>Orders</h1>
+      <h1> {isEnglish ? 'Orders' : 'Các đơn hàng'}</h1>
 
       {loading ? (
         <LoadingBox />
@@ -71,14 +73,30 @@ export default function OrderScreenListForStaff() {
         <table className="table">
           <thead>
             <tr>
-              <th>ID</th>
-              <th>USER</th>
-              <th>DATE</th>
-              <th>TOTAL</th>
-              <th>PAID</th>
-              <th>CANCELED</th>
-              <th>DELIVERED</th>
-              <th>ACTIONS</th>
+              <th>
+                ID</th>
+              <th>
+                {isEnglish ? 'USER' : 'Người dùng'}
+
+              </th>
+              <th>
+                {isEnglish ? 'DATE' : 'Thời gian'}
+              </th>
+              <th>
+                {isEnglish ? 'TOTAL' : 'Tổng số tiền'}
+              </th>
+              <th>
+                {isEnglish ? 'PAID' : 'Tình trạng thanh toán'}
+              </th>
+              <th>
+                {isEnglish ? 'CANCELED' : 'Tình trạng hủy'}
+              </th>
+              <th>
+                {isEnglish ? 'DELIVERED' : 'Tình trạng giao hàng'}
+              </th>
+              <th>
+                {isEnglish ? 'ACTIONS' : 'Hành động'}
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -109,7 +127,8 @@ export default function OrderScreenListForStaff() {
                       }
                     }
                   >
-                    Details
+                    {isEnglish ? 'Details' : 'Xem chi tiết'}
+
                   </Button>
                 </td>
               </tr>

@@ -18,6 +18,8 @@ const initialState = {
          ? JSON.parse(localStorage.getItem('cartItems'))
          : [],
    },
+
+   isEnglish: false,
 };
 function reducer(state, action) {
    switch (action.type) {
@@ -70,6 +72,13 @@ function reducer(state, action) {
             ...state,
             cart: { ...state.cart, paymentMethod: action.payload },
          };
+
+      case 'CHANGE_LANGUAGE':
+         return {
+            ...state,
+            isEnglish: !state.isEnglish,
+         }
+
       default:
          return state;
    }

@@ -12,12 +12,13 @@ import axios from 'axios';
 
 export default function CartScreen() {
 
+
    let [isOutOfStock, setIsOutOfStock] = useState(false)
 
    const navigate = useNavigate();
    const { state, dispatch: ctxDispatch } = useContext(Store);
    const {
-      cart: { cartItems },
+      cart: { cartItems }, isEnglish
    } = state;
 
 
@@ -58,14 +59,19 @@ export default function CartScreen() {
    return (
       <div>
          <Helmet>
-            <title>Shopping Cart</title>
+            <title>
+               {isEnglish ? 'Shopping Cart' : 'Giỏ hàng'}
+            </title>
          </Helmet>
-         <h1>Shopping Cart</h1>
+         <h1> {isEnglish ? 'Shopping Cart' : 'Giỏ hàng'}</h1>
          <Row>
             <Col md={8}>
                {cartItems.length === 0 ? (
                   <MessageBox>
-                     Cart is empty. <Link to="/">Go Shopping</Link>
+                     {isEnglish ? 'Cart is empty' : 'Giỏ hàng trống'}
+                     <Link to="/">
+                        {isEnglish ? 'Go Shopping' : 'Tới trang sản phẩm'}
+                     </Link>
                   </MessageBox>
                ) : (
                   <ListGroup>
@@ -122,8 +128,12 @@ export default function CartScreen() {
                      <ListGroup variant="flush">
                         <ListGroup.Item>
                            <h3>
-                              Subtotal ({cartItems.reduce((a, c) => a + c.quantity, 0)}{' '}
-                              items) : $
+                              {isEnglish ? 'Subtotal' : 'Tổng tiền'}
+
+                              ({cartItems.reduce((a, c) => a + c.quantity, 0)}{' '}
+                              {isEnglish ? 'items' : 'sản phẩm'}
+
+                              ) : $
                               {cartItems.reduce((a, c) => a + c.price * c.quantity, 0)}
                            </h3>
                         </ListGroup.Item>
@@ -135,7 +145,7 @@ export default function CartScreen() {
                                  onClick={checkoutHandler}
                                  disabled={cartItems.length === 0}
                               >
-                                 Proceed to Checkout
+                                 {isEnglish ? 'Proceed to Checkout' : 'Tiến hành thanh toán'}
                               </Button>
                            </div>
                         </ListGroup.Item>

@@ -46,7 +46,7 @@ export default function ProductEditScreen() {
    const { id: productId } = params;
 
    const { state } = useContext(Store);
-   const { userInfo } = state;
+   const { userInfo, isEnglish } = state;
    const [{ loading, error, loadingUpdate, loadingUpload }, dispatch] =
       useReducer(reducer, {
          loading: true,
@@ -58,6 +58,7 @@ export default function ProductEditScreen() {
    const [price, setPrice] = useState('');
    const [image, setImage] = useState('');
    const [category, setCategory] = useState('');
+   const [categoryVn, setCategoryVn] = useState('');
    const [countInStock, setCountInStock] = useState('');
    const [brand, setBrand] = useState('');
    const [description, setDescription] = useState('');
@@ -72,6 +73,7 @@ export default function ProductEditScreen() {
             setPrice(data.price);
             setImage(data.image);
             setCategory(data.category);
+            setCategoryVn(data.categoryVn);
             setCountInStock(data.countInStock);
             setBrand(data.brand);
             setDescription(data.description);
@@ -99,6 +101,7 @@ export default function ProductEditScreen() {
                price,
                image,
                category,
+               categoryVn,
                brand,
                countInStock,
                description,
@@ -141,9 +144,13 @@ export default function ProductEditScreen() {
    return (
       <Container className="small-container">
          <Helmet>
-            <title>Edit Product ${productId}</title>
+            <title>
+               {isEnglish ? 'Edit Product $' : 'Sửa thông tin sản phẩm '}
+
+               {productId}</title>
          </Helmet>
-         <h1>Edit Product {productId}</h1>
+         <h1>{isEnglish ? 'Edit Product $' : 'Sửa thông tin sản phẩm'}&nbsp;
+            {productId}</h1>
 
          {loading ? (
             <LoadingBox></LoadingBox>
@@ -152,7 +159,9 @@ export default function ProductEditScreen() {
          ) : (
             <Form onSubmit={submitHandler}>
                <Form.Group className="mb-3" controlId="name">
-                  <Form.Label>Name</Form.Label>
+                  <Form.Label>
+                     {isEnglish ? 'Name' : 'Tên'}
+                  </Form.Label>
                   <Form.Control
                      value={name}
                      onChange={(e) => setName(e.target.value)}
@@ -160,7 +169,9 @@ export default function ProductEditScreen() {
                   />
                </Form.Group>
                <Form.Group className="mb-3" controlId="slug">
-                  <Form.Label>Slug</Form.Label>
+                  <Form.Label>
+                     {isEnglish ? 'Slug' : 'Tên đường dẫn'}
+                  </Form.Label>
                   <Form.Control
                      value={slug}
                      onChange={(e) => setSlug(e.target.value)}
@@ -168,7 +179,9 @@ export default function ProductEditScreen() {
                   />
                </Form.Group>
                <Form.Group className="mb-3" controlId="name">
-                  <Form.Label>Price</Form.Label>
+                  <Form.Label>
+                     {isEnglish ? 'Price' : 'Giá'}
+                  </Form.Label>
                   <Form.Control
                      value={price}
                      onChange={(e) => setPrice(e.target.value)}
@@ -176,7 +189,9 @@ export default function ProductEditScreen() {
                   />
                </Form.Group>
                <Form.Group className="mb-3" controlId="image">
-                  <Form.Label>Image File</Form.Label>
+                  <Form.Label>
+                     {isEnglish ? 'Image File' : 'Đường dẫn đến file hỉnh ảnh'}
+                  </Form.Label>
                   <Form.Control
                      value={image}
                      onChange={(e) => setImage(e.target.value)}
@@ -184,21 +199,40 @@ export default function ProductEditScreen() {
                   />
                </Form.Group>
                <Form.Group className="mb-3" controlId="imageFile">
-                  <Form.Label>Upload File</Form.Label>
+                  <Form.Label>
+                     {isEnglish ? 'Upload File' : 'Upload hình ảnh'}
+                  </Form.Label>
                   <Form.Control type="file" onChange={uploadFileHandler} />
                   {loadingUpload && <LoadingBox></LoadingBox>}
                </Form.Group>
 
+               {/* category */}
                <Form.Group className="mb-3" controlId="category">
-                  <Form.Label>Category</Form.Label>
+                  <Form.Label>
+                     {isEnglish ? 'Category' : 'Mặt hàng'}
+                  </Form.Label>
                   <Form.Control
                      value={category}
                      onChange={(e) => setCategory(e.target.value)}
                      required
                   />
                </Form.Group>
+               <Form.Group className="mb-3" controlId="categoryVn">
+                  <Form.Label>
+                     {isEnglish ? 'Category in Vietnamese' : 'Mặt hàng theo tiếng Việt'}
+                  </Form.Label>
+                  <Form.Control
+                     value={categoryVn}
+                     onChange={(e) => setCategoryVn(e.target.value)}
+                     required
+                  />
+               </Form.Group>
+
+
                <Form.Group className="mb-3" controlId="brand">
-                  <Form.Label>Brand</Form.Label>
+                  <Form.Label>
+                     {isEnglish ? 'Brand' : 'Nhãn hiệu'}
+                  </Form.Label>
                   <Form.Control
                      value={brand}
                      onChange={(e) => setBrand(e.target.value)}
@@ -206,7 +240,9 @@ export default function ProductEditScreen() {
                   />
                </Form.Group>
                <Form.Group className="mb-3" controlId="countInStock">
-                  <Form.Label>Count In Stock</Form.Label>
+                  <Form.Label>
+                     {isEnglish ? 'Count In Stock' : 'Số lượng'}
+                  </Form.Label>
                   <Form.Control
                      value={countInStock}
                      onChange={(e) => setCountInStock(e.target.value)}
@@ -214,7 +250,9 @@ export default function ProductEditScreen() {
                   />
                </Form.Group>
                <Form.Group className="mb-3" controlId="description">
-                  <Form.Label>Description</Form.Label>
+                  <Form.Label>
+                     {isEnglish ? 'Description' : 'Mô tả'}
+                  </Form.Label>
                   <Form.Control
                      value={description}
                      onChange={(e) => setDescription(e.target.value)}
@@ -223,7 +261,8 @@ export default function ProductEditScreen() {
                </Form.Group>
                <div className="mb-3">
                   <Button disabled={loadingUpdate} type="submit">
-                     Update
+                     {isEnglish ? 'Update' : 'Cập nhật'}
+
                   </Button>
                   {loadingUpdate && <LoadingBox></LoadingBox>}
                </div>

@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
 import { useNavigate } from 'react-router-dom';
+import { Store } from '../Store';
 
 export default function SearchBox() {
+
+   const { state, dispatch: ctxDispatch } = useContext(Store);
+   const { cart, isEnglish, userInfo } = state;
+
    const navigate = useNavigate();
    const [query, setQuery] = useState('');
    const submitHandler = (e) => {
@@ -21,7 +26,7 @@ export default function SearchBox() {
                name="q"
                id="q"
                onChange={(e) => setQuery(e.target.value)}
-               placeholder="search products..."
+               placeholder={isEnglish ? "search products..." : 'Nhập tên sản phẩm...'}
                aria-label="Search Products"
                aria-describedby="button-search"
             ></FormControl>

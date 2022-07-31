@@ -40,7 +40,7 @@ import Col from 'react-bootstrap/Col';
 
 function App() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
-  const { cart, userInfo } = state;
+  const { cart, isEnglish, userInfo } = state;
 
   const signoutHandler = () => {
     ctxDispatch({ type: 'USER_SIGNOUT' });
@@ -49,20 +49,31 @@ function App() {
     localStorage.removeItem('paymentMethod');
     window.location.href = '/signin';
   };
+
+
+  // const [isEnglish, setIsEnglish] = useState(true);
   const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const { data } = await axios.get(`/api/products/categories`);
-        setCategories(data);
+        const { data } = await axios.get(`/api/products/categoriesVn`);
+
+        if (isEnglish === true) {
+          setCategories(data.categories);
+        } else if (isEnglish === false) {
+          setCategories(data.categoriesVn)
+        }
+
       } catch (err) {
         toast.error(getError(err));
       }
     };
     fetchCategories();
-  }, []);
+  }, [isEnglish]);
+
+
   return (
     <BrowserRouter>
       <div
@@ -76,6 +87,17 @@ function App() {
         <header>
           <Navbar bg="dark" variant="dark" expand="lg">
             <Container>
+
+              {/* language button */}
+              <Button
+                variant="light"
+                onClick={() => ctxDispatch({ type: 'CHANGE_LANGUAGE' })}
+              >
+                {isEnglish ? 'English' : 'Tiếng Việt'}
+              </Button>
+
+              &nbsp;
+
               <Button
                 variant="dark"
                 onClick={() => setSidebarIsOpen(!sidebarIsOpen)}
@@ -84,14 +106,15 @@ function App() {
               </Button>
 
               <LinkContainer to="/">
-                <Navbar.Brand>Online Store</Navbar.Brand>
+                <Navbar.Brand>{isEnglish ? 'Online Store' : 'Cửa hàng Online'}</Navbar.Brand>
               </LinkContainer>
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav">
                 <SearchBox />
                 <Nav className="me-auto  w-100  justify-content-end">
                   <Link to="/cart" className="nav-link">
-                    Cart
+                    {isEnglish ? 'Cart' : 'Giỏ Hàng'}
+                    {/* Cart */}
                     {cart.cartItems.length > 0 && (
                       <Badge pill bg="danger">
                         {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
@@ -103,10 +126,14 @@ function App() {
                   {userInfo ? (
                     <NavDropdown title={userInfo.name} id="basic-nav-dropdown">
                       <LinkContainer to="/profile">
-                        <NavDropdown.Item>User Profile</NavDropdown.Item>
+                        <NavDropdown.Item>
+                          {isEnglish ? 'User Profile' : 'Thông tin người dùng'}
+                        </NavDropdown.Item>
                       </LinkContainer>
                       <LinkContainer to="/orderhistory">
-                        <NavDropdown.Item>Order History</NavDropdown.Item>
+                        <NavDropdown.Item>
+                          {isEnglish ? 'Order History' : 'Lịch sử mua hàng'}
+                        </NavDropdown.Item>
                       </LinkContainer>
                       <NavDropdown.Divider />
                       <Link
@@ -114,12 +141,14 @@ function App() {
                         to="#signout"
                         onClick={signoutHandler}
                       >
-                        Sign Out
+
+                        {isEnglish ? 'Sign Out' : 'Đăng xuất'}
+
                       </Link>
                     </NavDropdown>
                   ) : (
                     <Link className="nav-link" to="/signin">
-                      Sign In
+                      {isEnglish ? 'Sign In' : 'Đăng Nhập'}
                     </Link>
                   )}
 
@@ -127,16 +156,24 @@ function App() {
                   {userInfo && userInfo.isAdmin && (
                     <NavDropdown title="Admin" id="admin-nav-dropdown">
                       <LinkContainer to="/admin/dashboard">
-                        <NavDropdown.Item>Dashboard</NavDropdown.Item>
+                        <NavDropdown.Item>
+                          {isEnglish ? 'Dashboard' : 'Thống kê doanh số'}
+                        </NavDropdown.Item>
                       </LinkContainer>
                       <LinkContainer to="/admin/products">
-                        <NavDropdown.Item>Products</NavDropdown.Item>
+                        <NavDropdown.Item>
+                          {isEnglish ? 'Products' : 'Quản lý sản phẩm'}
+                        </NavDropdown.Item>
                       </LinkContainer>
                       <LinkContainer to="/admin/orders">
-                        <NavDropdown.Item>Orders</NavDropdown.Item>
+                        <NavDropdown.Item>
+                          {isEnglish ? 'Orders' : 'Quản lý đơn hàng'}
+                        </NavDropdown.Item>
                       </LinkContainer>
                       <LinkContainer to="/admin/users">
-                        <NavDropdown.Item>Users</NavDropdown.Item>
+                        <NavDropdown.Item>
+                          {isEnglish ? 'Users' : 'Quản lý người dùng'}
+                        </NavDropdown.Item>
                       </LinkContainer>
                     </NavDropdown>
                   )}
@@ -145,7 +182,9 @@ function App() {
                   {userInfo && userInfo.isStaff && (
                     <NavDropdown title="Staff" id="staff-nav-dropdown">
                       <LinkContainer to="/isstaff/orderslistcreenforstaff">
-                        <NavDropdown.Item>Orders</NavDropdown.Item>
+                        <NavDropdown.Item>
+                          {isEnglish ? 'Orders' : 'Các đơn hàng'}
+                        </NavDropdown.Item>
                       </LinkContainer>
                     </NavDropdown>
                   )}
@@ -196,7 +235,9 @@ function App() {
             <Nav.Item
               className='mb-3'
             >
-              <strong>Categories</strong>
+              <strong>
+                {isEnglish ? 'Categories' : 'Mặt hàng'}
+              </strong>
             </Nav.Item>
             {categories.map((category) => (
               <Nav.Item key={category}>
@@ -332,7 +373,9 @@ function App() {
             >
               <h1
               // style={{ color: '#ccc' }}
-              >Online Store</h1>
+              >{
+                  isEnglish ? 'Online Store' : ' Cửa hàng Online'
+                }</h1>
             </Col>
 
             <Col
@@ -340,28 +383,36 @@ function App() {
               md={4}
               style={{ textAlign: 'left' }}
             >
-              <h3>Address</h3>
-              <h6>Mr John Smith. 132, My Street, Kingston, New York 12401.</h6>
+              <h3>
+                {isEnglish ? 'Address' : 'Địa chỉ'}
+              </h3>
+              <h6>{isEnglish ? 'Mr John Smith. 132, My Street, Kingston, New York 12401.' : 'số 1 Đại Cồ Việt quận Hai Bà Trưng thành phố Hà Nội'}</h6>
             </Col>
             <Col
               className='border-right-footer pt-3'
               md={4}
               style={{ textAlign: 'left' }}
             >
-              <h3>Contact</h3>
+              <h3>
+                {isEnglish ? 'Contact' : 'Liên Hệ'}
+              </h3>
               <i className="fab fa-facebook"></i> &nbsp;
               <i className="fas fa-envelope"></i> &nbsp;
               <i className="fab fa-twitter"></i> &nbsp;
               <i className="fas fa-mobile-alt"></i>
             </Col>
           </Row>
-          <div className="text-center"
+
+
+          {/* <div className="text-center"
             style={{ background: '#c4c4c4' }}
           >
             <h6>
               All rights reserved
             </h6>
-          </div>
+          </div> */}
+
+
         </footer>
       </div>
     </BrowserRouter>

@@ -46,7 +46,7 @@ export default function UserListScreen() {
       });
 
    const { state } = useContext(Store);
-   const { userInfo } = state;
+   const { userInfo, isEnglish } = state;
 
    useEffect(() => {
       const fetchData = async () => {
@@ -90,9 +90,11 @@ export default function UserListScreen() {
    return (
       <div>
          <Helmet>
-            <title>Users</title>
+            <title>
+               {isEnglish ? 'Users' : 'Danh sách người dùng'}
+            </title>
          </Helmet>
-         <h1>Users</h1>
+         <h1>{isEnglish ? 'Users' : 'Danh sách người dùng'}</h1>
 
          {loadingDelete && <LoadingBox></LoadingBox>}
          {loading ? (
@@ -104,11 +106,21 @@ export default function UserListScreen() {
                <thead>
                   <tr>
                      <th>ID</th>
-                     <th>NAME</th>
-                     <th>EMAIL</th>
-                     <th>IS ADMIN</th>
-                     <th>IS STAFF</th>
-                     <th>ACTIONS</th>
+                     <th>
+                        {isEnglish ? 'NAME' : 'Tên'}
+                     </th>
+                     <th>
+                        {isEnglish ? 'EMAIL' : 'Email'}
+                     </th>
+                     <th>
+                        {isEnglish ? 'IS ADMIN' : 'admin'}
+                     </th>
+                     <th>
+                        {isEnglish ? 'IS STAFF' : 'Nhân viên'}
+                     </th>
+                     <th>
+                        {isEnglish ? 'ACTIONS' : 'Hành động'}
+                     </th>
                   </tr>
                </thead>
                <tbody>
@@ -125,7 +137,9 @@ export default function UserListScreen() {
                               variant="light"
                               onClick={() => navigate(`/admin/user/${user._id}`)}
                            >
-                              Edit
+
+                              {isEnglish ? 'Edit' : 'Sửa'}
+
                            </Button>
                            &nbsp;
                            <Button
@@ -133,7 +147,9 @@ export default function UserListScreen() {
                               variant="light"
                               onClick={() => deleteHandler(user)}
                            >
-                              Delete
+
+                              {isEnglish ? 'Delete' : 'Xóa'}
+
                            </Button>
                         </td>
                      </tr>

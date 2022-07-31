@@ -19,7 +19,7 @@ export default function SigninScreen() {
    const [password, setPassword] = useState('');
 
    const { state, dispatch: ctxDispatch } = useContext(Store);
-   const { userInfo } = state;
+   const { userInfo, isEnglish } = state;
    const submitHandler = async (e) => {
       e.preventDefault();
       try {
@@ -44,9 +44,9 @@ export default function SigninScreen() {
    return (
       <Container className="small-container">
          <Helmet>
-            <title>Sign In</title>
+            <title>{isEnglish ? 'Sign In' : 'Đăng Nhập'}</title>
          </Helmet>
-         <h1 className="my-3">Sign In</h1>
+         <h1 className="my-3">{isEnglish ? 'Sign In' : 'Đăng Nhập'}</h1>
          <Form onSubmit={submitHandler}>
             <Form.Group className="mb-3" controlId="email">
                <Form.Label>Email</Form.Label>
@@ -65,11 +65,14 @@ export default function SigninScreen() {
                />
             </Form.Group>
             <div className="mb-3">
-               <Button type="submit">Sign In</Button>
+               <Button type="submit">{isEnglish ? 'Sign In' : 'Đăng Nhập'}</Button>
             </div>
             <div className="mb-3">
-               New customer?{' '}
-               <Link to={`/signup?redirect=${redirect}`}>Create your account</Link>
+               {isEnglish ? 'New customer?' : 'Chưa có tài khoản'}
+               {' '}
+               <Link to={`/signup?redirect=${redirect}`}>
+                  {isEnglish ? 'Create your account' : 'Tạo tài khoản mới'}
+               </Link>
             </div>
          </Form>
       </Container>

@@ -11,6 +11,8 @@ import SlideShow from '../components/SlideShow'
 import { LinkContainer } from 'react-router-bootstrap';
 import Button from 'react-bootstrap/Button';
 import { useLocation } from 'react-router-dom';
+import { useContext } from 'react';
+import { Store } from '../Store';
 // import data from '../data';
 
 const reducer = (state, action) => {
@@ -35,6 +37,10 @@ const reducer = (state, action) => {
 };
 
 function HomeScreen() {
+
+   const { state, dispatch: ctxDispatch } = useContext(Store)
+   const { cart, isEnglish, userInfo } = state;
+
    const [{ loading, error, products, productQuantitySolds, pages, countProducts }, dispatch] = useReducer(/* logger( */reducer/* ) */, {
       loading: true,
       error: '',
@@ -45,7 +51,7 @@ function HomeScreen() {
          try {
             const { data } = await axios.get(
                // `/api/products/search/home?category=all&query=all&price=all&rating=all&order=toprated&page=1`
-               `/api/products/search/home?&order=toprated&page=1`
+               `/api/products/search/home?&order=highest&page=1`
             );
 
             // console.log(data);
@@ -66,25 +72,30 @@ function HomeScreen() {
       const filterPage = filter.page || 1;
 
       // return `/search?category=all&query=all&price=all&rating=all&order=toprated&page=${filterPage}`;
-      return `/search?order=toprated&page=${filterPage}`;
+      return `/search?order=highest&page=${filterPage}`;
    };
 
    return (
       <div >
          <Helmet>
-            <title>Online Store</title>
+            <title>{isEnglish ? 'Online Store' : 'Cửa hàng Online'}</title>
          </Helmet>
          <div>
             <h1
                className='mb-5'
-            >Hot Products</h1>
+            >
+               {isEnglish ? 'Hot Products' : 'Sản phẩm Hot'}
+            </h1>
             <SlideShow />
          </div>
 
 
          <h1
             className='mt-5 mb-5'
-         >Featured Products</h1>
+         >
+            {isEnglish ? 'Featured Products' : 'Sản phẩm nổi bật'}
+
+         </h1>
          <div className="products">
             {loading ? (
                <LoadingBox />

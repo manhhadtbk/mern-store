@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useContext, useEffect, useReducer, useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -12,6 +12,7 @@ import MessageBox from '../components/MessageBox';
 import Button from 'react-bootstrap/Button';
 import Product from '../components/Product';
 import LinkContainer from 'react-router-bootstrap/LinkContainer';
+import { Store } from '../Store';
 
 const reducer = (state, action) => {
    switch (action.type) {
@@ -73,6 +74,10 @@ export const ratings = [
 ];
 
 export default function SearchScreen() {
+
+   const { state, dispatch: ctxDispatch } = useContext(Store);
+   const { cart, isEnglish, userInfo } = state;
+
    const navigate = useNavigate();
 
    let location = useLocation()
@@ -165,12 +170,16 @@ export default function SearchScreen() {
    return (
       <div>
          <Helmet>
-            <title>Search Products</title>
+            <title>
+               {isEnglish ? 'Search Products' : 'Tìm kiếm sản phẩm'}
+            </title>
          </Helmet>
          <Row>
             <Col md={3}>
 
-               <h3>Categories</h3>
+               <h3>
+                  {isEnglish ? 'Categories' : 'Mặt hàng'}
+               </h3>
                <div>
                   <ul>
                      <li>
@@ -178,7 +187,8 @@ export default function SearchScreen() {
                            className={'all' === category ? 'text-bold' : ''}
                            to={getFilterUrl({ category: 'all' })}
                         >
-                           Any
+                           {isEnglish ? 'Any' : 'Mọi mặt hàng'}
+
                         </Link>
                      </li>
                      {categories.map((c) => (
@@ -194,7 +204,9 @@ export default function SearchScreen() {
                   </ul>
                </div>
 
-               <h3>Brand</h3>
+               <h3>
+                  {isEnglish ? 'Brand' : 'Thương hiệu'}
+               </h3>
                <div>
                   <ul>
                      <li>
@@ -202,7 +214,9 @@ export default function SearchScreen() {
                            className={'all' === brand ? 'text-bold' : ''}
                            to={getFilterUrl({ brand: 'all' })}
                         >
-                           Any
+
+                           {isEnglish ? 'Any' : 'Mọi thương hiệu'}
+
                         </Link>
                      </li>
                      {brands.map((c) => (
@@ -219,14 +233,18 @@ export default function SearchScreen() {
                </div>
 
                <div>
-                  <h3>Price</h3>
+                  <h3>
+                     {isEnglish ? 'Price' : 'Tìm kiếm theo khoảng giá'}
+                  </h3>
                   <ul>
                      <li>
                         <Link
                            className={'all' === price ? 'text-bold' : ''}
                            to={getFilterUrl({ price: 'all' })}
                         >
-                           Any
+
+                           {isEnglish ? 'Any' : 'Mọi mức giá'}
+
                         </Link>
                      </li>
                      {prices.map((p) => (
@@ -242,7 +260,9 @@ export default function SearchScreen() {
                   </ul>
                </div>
                <div>
-                  <h3>Avg. Customer Review</h3>
+                  <h3>
+                     {isEnglish ? 'Avg. Customer Review' : 'Theo xếp hạng người dùng bình chọn'}
+                  </h3>
                   <ul>
                      {ratings.map((r) => (
                         <li key={r.name}>
@@ -296,17 +316,27 @@ export default function SearchScreen() {
                            </div>
                         </Col>
                         <Col className="text-end">
-                           Sort by{' '}
+                           {isEnglish ? 'Sort by' : 'Sắp xếp theo'}
+
+                           {' '}
                            <select
                               value={order}
                               onChange={(e) => {
                                  navigate(getFilterUrl({ order: e.target.value }));
                               }}
                            >
-                              <option value="newest">Newest Arrivals</option>
-                              <option value="lowest">Price: Low to High</option>
-                              <option value="highest">Price: High to Low</option>
-                              <option value="toprated">Avg. Customer Reviews</option>
+                              <option value="newest">
+                                 {isEnglish ? 'Newest Arrivals' : 'Mới nhất'}
+                              </option>
+                              <option value="lowest">
+                                 {isEnglish ? 'Price: Low to High' : 'Giá tăng dần'}
+                              </option>
+                              <option value="highest">
+                                 {isEnglish ? 'Price: High to Low' : 'Giá giảm dần'}
+                              </option>
+                              <option value="toprated">
+                                 {isEnglish ? 'Avg. Customer Reviews' : 'Bình chọn của người dùng'}
+                              </option>
                            </select>
                         </Col>
                      </Row>

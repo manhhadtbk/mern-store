@@ -22,6 +22,7 @@ productRouter.post(
          image: '/images/p1.jpg',
          price: 0,
          category: 'sample category',
+         categoryVn: 'sample categoryVn',
          brand: 'sample brand',
          countInStock: 0,
          rating: 0,
@@ -324,6 +325,17 @@ productRouter.get(
    expressAsyncHandler(async (req, res) => {
       const categories = await Product.find().distinct('category');
       res.send(categories);
+   })
+);
+
+productRouter.get(
+   '/categoriesVn',
+   expressAsyncHandler(async (req, res) => {
+      const categories = await Product.find().distinct('category');
+      const categoriesVn = await Product.find().distinct('categoryVn');
+
+
+      res.send({ categories, categoriesVn });
    })
 );
 

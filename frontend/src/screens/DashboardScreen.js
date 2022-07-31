@@ -35,7 +35,7 @@ export default function DashboardScreen() {
       summary: {},
    });
    const { state } = useContext(Store);
-   const { userInfo } = state;
+   const { userInfo, isEnglish } = state;
 
    useEffect(() => {
       const fetchData = async () => {
@@ -58,7 +58,9 @@ export default function DashboardScreen() {
 
    return (
       <div>
-         <h1>Dashboard</h1>
+         <h1>
+            {isEnglish ? 'Dashboard' : 'Trang thống kê'}
+         </h1>
          {loading ? (
             <LoadingBox />
          ) : error ? (
@@ -77,7 +79,9 @@ export default function DashboardScreen() {
                         }}
                      >
                         <Card.Body>
-                           <Card.Text> Today Profit</Card.Text>
+                           <Card.Text>
+                              {isEnglish ? 'Today Profit' : 'Lợi nhuận trong ngày'}
+                           </Card.Text>
 
                            <Card.Title
                               style={{
@@ -94,7 +98,8 @@ export default function DashboardScreen() {
                               <Link
                                  style={{ color: '#333', textDecoration: 'none' }}
                                  to="/admin/orders">
-                                 View details
+                                 {isEnglish ? ' View details' : 'Xem chi tiết'}
+
                               </Link>
                            </Button>
                         </Card.Body>
@@ -109,7 +114,9 @@ export default function DashboardScreen() {
                         }}
                      >
                         <Card.Body>
-                           <Card.Text> Last Week Profit</Card.Text>
+                           <Card.Text>
+                              {isEnglish ? 'Last Week Profit' : 'Lợi nhuận trong tuần'}
+                           </Card.Text>
 
                            <Card.Title
                               style={{
@@ -126,7 +133,8 @@ export default function DashboardScreen() {
                               <Link
                                  style={{ color: '#333', textDecoration: 'none' }}
                                  to="/admin/orders">
-                                 View details
+                                 {isEnglish ? 'View details' : 'Xem chi tiết'}
+
                               </Link>
                            </Button>
                         </Card.Body>
@@ -141,7 +149,9 @@ export default function DashboardScreen() {
                         }}
                      >
                         <Card.Body>
-                           <Card.Text> Last Month Profit</Card.Text>
+                           <Card.Text>
+                              {isEnglish ? 'Last Month Profit' : 'Lợi nhuận trong tháng'}
+                           </Card.Text>
 
                            <Card.Title
                               style={{
@@ -158,7 +168,8 @@ export default function DashboardScreen() {
                               <Link
                                  style={{ color: '#333', textDecoration: 'none' }}
                                  to="/admin/orders">
-                                 View details
+                                 {isEnglish ? 'View details' : 'Xem chi tiết'}
+
                               </Link>
                            </Button>
                         </Card.Body>
@@ -173,7 +184,9 @@ export default function DashboardScreen() {
                         }}
                      >
                         <Card.Body>
-                           <Card.Text> Total Profit</Card.Text>
+                           <Card.Text>
+                              {isEnglish ? 'Total Profit' : 'Tổng lợi nhuận'}
+                           </Card.Text>
 
                            <Card.Title
                               style={{
@@ -190,7 +203,8 @@ export default function DashboardScreen() {
                               <Link
                                  style={{ color: '#333', textDecoration: 'none' }}
                                  to="/admin/orders">
-                                 View details
+                                 {isEnglish ? 'View details' : 'Xem chi tiết'}
+
                               </Link>
                            </Button>
                         </Card.Body>
@@ -214,7 +228,9 @@ export default function DashboardScreen() {
                         }}
                      >
                         <Card.Body>
-                           <Card.Text> Number of Remaining Products</Card.Text>
+                           <Card.Text>
+                              {isEnglish ? 'Number of Remaining Products' : 'Số sản phẩm còn trong kho'}
+                           </Card.Text>
 
                            <Card.Title
                               style={{
@@ -231,7 +247,8 @@ export default function DashboardScreen() {
                               <Link
                                  style={{ color: '#333', textDecoration: 'none' }}
                                  to="/admin/orders">
-                                 View details
+                                 {isEnglish ? 'View details' : 'Xem chi tiết'}
+
                               </Link>
                            </Button>
                         </Card.Body>
@@ -250,7 +267,9 @@ export default function DashboardScreen() {
                         }}
                      >
                         <Card.Body>
-                           <Card.Text> Number of Products Sold</Card.Text>
+                           <Card.Text>
+                              {isEnglish ? 'Number of Products Sold' : 'Số sản phẩm đã bán được'}
+                           </Card.Text>
 
                            <Card.Title
                               style={{
@@ -266,7 +285,8 @@ export default function DashboardScreen() {
                               <Link
                                  style={{ color: '#333', textDecoration: 'none' }}
                                  to="/admin/orders">
-                                 View details
+                                 {isEnglish ? 'View details' : 'Xem chi tiết'}
+
                               </Link>
                            </Button>
                         </Card.Body>
@@ -285,7 +305,9 @@ export default function DashboardScreen() {
                         }}
                      >
                         <Card.Body>
-                           <Card.Text> Number of Total Product</Card.Text>
+                           <Card.Text>
+                              {isEnglish ? 'Number of Total Product' : 'Tổng sổ sản phẩm'}
+                           </Card.Text>
 
                            <Card.Title
                               style={{
@@ -308,7 +330,9 @@ export default function DashboardScreen() {
                               <Link
                                  style={{ color: '#333', textDecoration: 'none' }}
                                  to="/admin/orders">
-                                 View details
+
+                                 {isEnglish ? 'View details' : 'Xem chi tiết'}
+
                               </Link>
                            </Button>
                         </Card.Body>
@@ -327,7 +351,9 @@ export default function DashboardScreen() {
                         }}
                      >
                         <Card.Body>
-                           <Card.Text> Number of total Orders</Card.Text>
+                           <Card.Text>
+                              {isEnglish ? ' Number of total Orders' : 'Tổng số đơn hàng'}
+                           </Card.Text>
                            <Card.Title
                               style={{
                                  fontSize: '1.25rem',
@@ -344,7 +370,8 @@ export default function DashboardScreen() {
                               <Link
                                  style={{ color: '#333', textDecoration: 'none' }}
                                  to="/admin/orders">
-                                 View details
+                                 {isEnglish ? 'View details' : 'Xem chi tiết'}
+
                               </Link>
                            </Button>
                         </Card.Body>
@@ -359,7 +386,9 @@ export default function DashboardScreen() {
                         }}
                      >
                         <Card.Body>
-                           <Card.Text> Number of Canceled Orders</Card.Text>
+                           <Card.Text>
+                              {isEnglish ? 'Number of Canceled Orders' : 'Số đơn hàng bị hủy'}
+                           </Card.Text>
                            <Card.Title
                               style={{
                                  fontSize: '1.25rem',
@@ -374,7 +403,7 @@ export default function DashboardScreen() {
                               <Link
                                  style={{ color: '#333', textDecoration: 'none' }}
                                  to="/admin/orders">
-                                 View details
+                                 {isEnglish ? ' View details' : 'Xem chi tiết'}
                               </Link>
                            </Button>
                         </Card.Body>
@@ -389,7 +418,9 @@ export default function DashboardScreen() {
                         }}
                      >
                         <Card.Body>
-                           <Card.Text> Number of Success Orders</Card.Text>
+                           <Card.Text>
+                              {isEnglish ? ' Number of Success Orders' : 'Tổng số đơn hàng bán được'}
+                           </Card.Text>
                            <Card.Title
                               style={{
                                  fontSize: '1.25rem',
@@ -404,7 +435,8 @@ export default function DashboardScreen() {
                               <Link
                                  style={{ color: '#333', textDecoration: 'none' }}
                                  to="/admin/orders">
-                                 View details
+                                 {isEnglish ? 'View details' : 'Xem chi tiết'}
+
                               </Link>
                            </Button>
                         </Card.Body>
@@ -419,7 +451,9 @@ export default function DashboardScreen() {
                         }}
                      >
                         <Card.Body>
-                           <Card.Text> Number of Processing Orders</Card.Text>
+                           <Card.Text>
+                              {isEnglish ? 'Number of Processing Orders' : 'Số đơn hàng đang xử lý'}
+                           </Card.Text>
                            <Card.Title
                               style={{
                                  fontSize: '1.25rem',
@@ -434,7 +468,8 @@ export default function DashboardScreen() {
                               <Link
                                  style={{ color: '#333', textDecoration: 'none' }}
                                  to="/admin/orders">
-                                 View details
+                                 {isEnglish ? 'View details' : 'Xem chi tiết'}
+
                               </Link>
                            </Button>
                         </Card.Body>
@@ -455,7 +490,9 @@ export default function DashboardScreen() {
                         }}
                      >
                         <Card.Body>
-                           <Card.Text> Number of Products Category</Card.Text>
+                           <Card.Text>
+                              {isEnglish ? 'Number of Products Category' : 'Tổng số loại mặt hàng'}
+                           </Card.Text>
 
                            <Card.Title
                               style={{
@@ -471,7 +508,8 @@ export default function DashboardScreen() {
                               <Link
                                  style={{ color: '#333', textDecoration: 'none' }}
                                  to="/admin/orders">
-                                 View details
+                                 {isEnglish ? ' View details' : 'Xem chi tiết'}
+
                               </Link>
                            </Button>
                         </Card.Body>
@@ -491,7 +529,9 @@ export default function DashboardScreen() {
                         bg='info'
                      >
                         <Card.Body>
-                           <Card.Text> Number of Users</Card.Text>
+                           <Card.Text>
+                              {isEnglish ? 'Number of Users' : 'Tổng số người dùng'}
+                           </Card.Text>
                            <Card.Title
                               style={{
                                  fontSize: '1.25rem',
@@ -506,7 +546,8 @@ export default function DashboardScreen() {
                               <Link
                                  style={{ color: '#333', textDecoration: 'none' }}
                                  to="/admin/users">
-                                 View details
+                                 {isEnglish ? 'View details' : 'Xem chi tiết'}
+
                               </Link>
                            </Button>
                         </Card.Body>
@@ -522,7 +563,9 @@ export default function DashboardScreen() {
 
 
                <div className="my-3">
-                  <h2>Average Profit</h2>
+                  <h2>
+                     {isEnglish ? ' Average Profit' : 'Biểu đồ lợi nhuận trung bình'}
+                  </h2>
                   {summary.dailyOrders.length === 0 ? (
                      <MessageBox>No Sale</MessageBox>
                   ) : (
@@ -540,7 +583,9 @@ export default function DashboardScreen() {
                </div>
 
                <div className="my-3">
-                  <h2>Categories</h2>
+                  <h2>
+                     {isEnglish ? 'Categories' : 'Các mặt hàng đang kinh doanh'}
+                  </h2>
                   {summary.productCategories.length === 0 ? (
                      <MessageBox>No Category</MessageBox>
                   ) : (
@@ -559,7 +604,9 @@ export default function DashboardScreen() {
 
 
                <div className="my-3">
-                  <h2>Hot Selling</h2>
+                  <h2>
+                     {isEnglish ? 'Hot Selling' : 'Sản phẩm bán chạy'}
+                  </h2>
                   {summary.productQuantitySolds.length === 0 ? (
                      <MessageBox>No Category</MessageBox>
                   ) : (
